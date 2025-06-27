@@ -39,7 +39,7 @@ const LevelTwoPage = () => {
             <div>
                 <h1 className="header">Subscribers List for level 2 approver</h1>
                 <ul>
-                    {subscriberList.length===0 && "No pending for approval"}
+                    {subscriberList.length===0 && "No pending for approval from level 1"}
                     {subscriberList.map((sub: any) => (
                         <li key={sub.id}>{sub.subscriberName}
                             <button onClick={() => handleLevel2Approval(sub.id, SubscriberEnum.Level2Approved)} className="bg-fuchsia-900 hover:bg-fuchsia-400 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">

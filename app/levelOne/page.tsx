@@ -47,6 +47,7 @@ const LevelOnePage = () => {
             <div>
                 <h1 className="header">Subscribers List for level 1 approver</h1>
                 <ul>
+                    {subscriberList.length===0 && "no subs pending for approval"}
                     {subscriberList.map((sub: any) => (
                         <li key={sub.id}>{sub.subscriberName}
                             <button onClick={() => handleApproval(sub.id, SubscriberEnum.Level1Approved)} className="bg-amber-300 hover:bg-amber-200 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
