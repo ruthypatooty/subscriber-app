@@ -6,6 +6,7 @@ const activeRouter = Router();
 
 activeRouter.get('/active-subscribers', async(req,res)=>{
     try{
+        console.log('active route called!');
         const activesubs = await Subscriber.findAll({
             where:{status: SubscriberEnum.Level2Approved}
         })

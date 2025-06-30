@@ -21,7 +21,10 @@ app.get('/',(req,res)=>{
 app.use('/api/subscribers', subRoutes);
 app.use('/api/firstlevelapprover',level1router);
 app.use('/api/secondlevelapprover',level2router);
-app.use('/api', activeRouter);
+app.use('/api', (req,res,next)=>{
+    console.log('API route for active router');
+    next();
+},activeRouter);
 
 async function startServer(){
     await initDatabase();

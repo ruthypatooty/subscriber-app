@@ -3,6 +3,7 @@ import { SubscriberEnum } from '@/shared/enum/statusEnum';
 import { SubscriberAttributes } from '@/shared/subscriberType';
 import React, { useEffect, useState } from 'react'
 import BackBtn from '../users/components/BackBtn';
+import SubList from '../users/components/SubList';
 
 const LevelTwoPage = () => {
     const [subscriberList,setSubscriberList] = useState<SubscriberAttributes[]>([]);
@@ -53,6 +54,7 @@ const LevelTwoPage = () => {
                         </li>
                     ))}</span>
                 </ul>
+                <SubList/>
 
             </div>
         </>

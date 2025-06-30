@@ -9,12 +9,13 @@ const SubList = () => {
         try{
             const res = await fetch('http://localhost:3001/api/active-subscribers');
 
-            const activeSubList : SubscriberAttributes[]= await res.json();
-            setActiveList(activeSubList);
-
             if(!res.ok){
                 throw new Error(`error in showlist ${res.status}`);
             }
+
+            const activeSubList : SubscriberAttributes[]= await res.json();
+            setActiveList(activeSubList);
+
         }catch(error){
             console.error('error in subscriber list');
         }
