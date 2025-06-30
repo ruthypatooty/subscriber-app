@@ -6,7 +6,7 @@ const LevelOneApprover = () => {
   return (
     <>
         <Link href ="/levelOne">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            <button className='btn btn-outline btn-accent'
             onClick={()=>console.log("button clicked level one!")}>
                 Level 1 Approver
             </button>

@@ -2,6 +2,7 @@
 import { SubscriberEnum } from '@/shared/enum/statusEnum';
 import { SubscriberAttributes } from '@/shared/subscriberType';
 import React, { useEffect, useState } from 'react'
+import BackBtn from '../users/components/BackBtn';
 
 const LevelTwoPage = () => {
     const [subscriberList,setSubscriberList] = useState<SubscriberAttributes[]>([]);
@@ -36,20 +37,21 @@ const LevelTwoPage = () => {
     }
   return (
         <>
-            <div>
-                <h1 className="header">Subscribers List for level 2 approver</h1>
-                <ul>
+            <BackBtn/>
+            <div className='flex flex-col justify-center items-center h-screen gap-4'>
+                <h1 className='header p-4 pb-2 opacity-60 tracking-wide'>Subscribers List for level 2 approver</h1>
+                <ul className='list bg-base-100 rounded-box shadow-md'>
                     {subscriberList.length===0 && "No pending for approval from level 1"}
-                    {subscriberList.map((sub: any) => (
-                        <li key={sub.id}>{sub.subscriberName}
-                            <button onClick={() => handleLevel2Approval(sub.id, SubscriberEnum.Level2Approved)} className="bg-fuchsia-900 hover:bg-fuchsia-400 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    <span className='min-w-48'>{subscriberList.map((sub: any) => (
+                        <li className='list-row flex gap-2 justify-between items-center' key={sub.id}>{sub.subscriberName}
+                            <button onClick={() => handleLevel2Approval(sub.id, SubscriberEnum.Level2Approved)} className="w-32 bg-fuchsia-900 hover:bg-fuchsia-400 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 Approve
                             </button>
-                            <button onClick={() => handleLevel2Approval(sub.id, SubscriberEnum.Rejected)} className="bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            <button onClick={() => handleLevel2Approval(sub.id, SubscriberEnum.Rejected)} className="w-32 bg-red-500 hover:bg-red-300 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 Reject
                             </button>
                         </li>
-                    ))}
+                    ))}</span>
                 </ul>
 
             </div>

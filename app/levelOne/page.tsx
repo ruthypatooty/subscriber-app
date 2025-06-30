@@ -3,6 +3,7 @@ import { Lovers_Quarrel } from 'next/font/google';
 import React, { useEffect, useState } from 'react'
 import { SubscriberAttributes } from '@/shared/subscriberType';
 import { SubscriberEnum } from '@/shared/enum/statusEnum';
+import BackBtn from '../users/components/BackBtn';
 
 const LevelOnePage = () => {
     const [subscriberList,setSubscriberList] = useState<SubscriberAttributes[]>([]);
@@ -44,12 +45,13 @@ const LevelOnePage = () => {
   
     return (
         <>
-            <div>
-                <h1 className="header">Subscribers List for level 1 approver</h1>
-                <ul>
+            <BackBtn/>
+            <div className='flex flex-col justify-center items-center h-screen gap-4'>
+                <h1 className="header p-4 pb-2 opacity-60 tracking-wide">Subscribers List for level 1 approver</h1>
+                <ul className='list bg-base-100 rounded-box shadow-md'>
                     {subscriberList.length===0 && "no subs pending for approval"}
-                    {subscriberList.map((sub: any) => (
-                        <li key={sub.id}>{sub.subscriberName}
+                    <span className='min-w-48'>{subscriberList.map((sub: any) => (
+                        <li className='list-row flex gap-2 justify-between items-center' key={sub.id}>{sub.subscriberName}
                             <button onClick={() => handleApproval(sub.id, SubscriberEnum.Level1Approved)} className="bg-amber-300 hover:bg-amber-200 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 Approve
                             </button>
@@ -57,7 +59,7 @@ const LevelOnePage = () => {
                                 Reject
                             </button>
                         </li>
-                    ))}
+                    ))}</span>
                 </ul>
 
             </div>

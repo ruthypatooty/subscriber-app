@@ -6,7 +6,7 @@ const SubscriberBtn = () => {
   return (
     <>
         <Link href ="/subscriber">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            <button className='btn btn-outline btn-secondary'
             onClick={()=>console.log("button clicked subscriber!")}>
                 Subscriber
             </button>
