@@ -6,6 +6,7 @@ import { initDatabase, sqlInstance } from "./config/database";
 import { start } from "repl";
 import level1router from "./routes/approverOneRoute";
 import level2router from "./routes/approverTwoRoute";
+import activeRouter from "./routes/activeSubRoutes";
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -20,6 +21,7 @@ app.get('/',(req,res)=>{
 app.use('/api/subscribers', subRoutes);
 app.use('/api/firstlevelapprover',level1router);
 app.use('/api/secondlevelapprover',level2router);
+app.use('/api', activeRouter);
 
 async function startServer(){
     await initDatabase();

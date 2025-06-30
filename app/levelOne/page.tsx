@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { SubscriberAttributes } from '@/shared/subscriberType';
 import { SubscriberEnum } from '@/shared/enum/statusEnum';
 import BackBtn from '../users/components/BackBtn';
+import SubList from '../users/components/SubList';
 
 const LevelOnePage = () => {
     const [subscriberList,setSubscriberList] = useState<SubscriberAttributes[]>([]);
@@ -63,6 +64,7 @@ const LevelOnePage = () => {
                 </ul>
 
             </div>
+            <SubList/>
         </>
   )
 }
