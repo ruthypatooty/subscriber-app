@@ -54,7 +54,6 @@ const LevelTwoPage = () => {
                         </li>
                     ))}</span>
                 </ul>
-                <SubList/>
 
             </div>
         </>

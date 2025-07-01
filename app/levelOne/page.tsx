@@ -47,7 +47,7 @@ const LevelOnePage = () => {
     return (
         <>
             <BackBtn/>
-            <div className='border-y-violet-800 flex flex-col justify-center items-center h-screen gap-4'>
+            <div className='flex flex-col justify-center items-center h-screen gap-4'>
                 <h1 className="header p-4 pb-2 opacity-60 tracking-wide">Subscribers List for level 1 approver</h1>
                 <ul className='list bg-base-100 rounded-box shadow-md'>
                     {subscriberList.length===0 && "no subs pending for approval"}

@@ -9,8 +9,10 @@ const statusEnum_1 = require("../../shared/enum/statusEnum");
 const activeRouter = (0, express_1.Router)();
 activeRouter.get('/active-subscribers', async (req, res) => {
     try {
-        const activesubs = await Subscriber_1.default.findAll({
-            where: { status: statusEnum_1.SubscriberEnum.Level2Approved }
+        console.log('active route called!');
+        const activesubs = await Subscriber_1.default.findOne({
+            where: { status: statusEnum_1.SubscriberEnum.Level2Approved },
+            order: [['updatedAt', 'DESC']]
         });
         res.status(200).json(activesubs);
     }

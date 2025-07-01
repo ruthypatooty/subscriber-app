@@ -3,6 +3,7 @@ import { setRequestMeta } from 'next/dist/server/request-meta';
 import React, { useState } from 'react'
 import {SubscriberEnum} from '../../shared/enum/statusEnum';
 import BackBtn from '../users/components/BackBtn';
+import SubList from '../users/components/SubList';
 
 const SubscriberPage = () => {
   const [subscriberName, setSubscriberName]=useState('');
@@ -37,19 +38,21 @@ const SubscriberPage = () => {
   }
   return (
     <>
-    <BackBtn/>
-        <div className='flex justify-center items-center h-screen gap-4'>
-            <input type ="text" 
-            placeholder="Enter your name..."
-            className=" border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent"
-            value={subscriberName}
-            onChange={(e)=>{setSubscriberName(e.target.value)}}
-            />
-            <button onClick={handleSubscriberSubmit} className="btn btn-secondary hover:bg-pink-500 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2">
-                Request
-            </button>
-        </div>
+      <BackBtn />
+      <div className='flex justify-center items-center h-screen gap-4'>
+        <input type="text"
+          placeholder="Enter your name..."
+          className=" border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent"
+          value={subscriberName}
+          onChange={(e) => { setSubscriberName(e.target.value) }}
+        />
+        <button onClick={handleSubscriberSubmit} className="btn btn-secondary hover:bg-pink-500 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2">
+          Request
+        </button>
         {message && <p className='text-red-800'>{message}</p>}
+
+      </div>
+      <div className='flex justify-baseline'><SubList /></div>
     </>
   )
 }

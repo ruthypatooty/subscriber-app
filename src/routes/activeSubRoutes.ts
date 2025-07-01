@@ -7,8 +7,9 @@ const activeRouter = Router();
 activeRouter.get('/active-subscribers', async(req,res)=>{
     try{
         console.log('active route called!');
-        const activesubs = await Subscriber.findAll({
-            where:{status: SubscriberEnum.Level2Approved}
+        const activesubs = await Subscriber.findOne({
+            where:{status: SubscriberEnum.Level2Approved},
+            order:[['updatedAt', 'DESC']]
         })
 
         res.status(200).json(activesubs);
