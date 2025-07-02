@@ -21,9 +21,9 @@ exports.sqlInstance = sequelize;
 async function initDatabase() {
     try {
         await sequelize.authenticate();
-        console.log("DB Connection sakses!");
+        console.log("DB Connection sakses!", sequelize.getDatabaseName());
         await sequelize.sync();
-        console.log("models synced..");
+        console.log("models synced..", sequelize.models);
     }
     catch (error) {
         console.error('unable to process', error);

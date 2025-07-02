@@ -1,15 +1,23 @@
 'use client';
 import { setRequestMeta } from 'next/dist/server/request-meta';
-import React, { useState } from 'react'
-import {SubscriberEnum} from '../../shared/enum/statusEnum';
+import React, { useEffect, useState } from 'react'
 import BackBtn from '../users/components/BackBtn';
 import SubList from '../users/components/SubList';
+import { SubscriberEnum } from '@/shared/enum/statusEnum';
+import { useRouter } from 'next/navigation';
 
 const SubscriberPage = () => {
   const [subscriberName, setSubscriberName]=useState('');
   const [subscriberRequestStatus, setSubscriberRequestStatus] = useState(SubscriberEnum.Sent);
   const [message, setMessage] = useState('');
+  const router = useRouter();
 
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      router.push('/login'); // redirect if not logged in
+    }
+  }, []);
   const handleSubscriberSubmit = async()=>{
     console.log('sending request....', subscriberName);
     try{

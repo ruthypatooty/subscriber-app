@@ -7,6 +7,7 @@ import { start } from "repl";
 import level1router from "./routes/approverOneRoute";
 import level2router from "./routes/approverTwoRoute";
 import activeRouter from "./routes/activeSubRoutes";
+import loginRouter from "./routes/loginRoute";
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -25,6 +26,7 @@ app.use('/api', (req,res,next)=>{
     console.log('API route for active router');
     next();
 },activeRouter);
+app.use('/api/loginpage', loginRouter);
 
 async function startServer(){
     await initDatabase();

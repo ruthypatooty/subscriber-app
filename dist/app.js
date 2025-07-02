@@ -11,6 +11,7 @@ const database_1 = require("./config/database");
 const approverOneRoute_1 = __importDefault(require("./routes/approverOneRoute"));
 const approverTwoRoute_1 = __importDefault(require("./routes/approverTwoRoute"));
 const activeSubRoutes_1 = __importDefault(require("./routes/activeSubRoutes"));
+const loginRoute_1 = __importDefault(require("./routes/loginRoute"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3001;
 app.use((0, cors_1.default)());
@@ -25,6 +26,7 @@ app.use('/api', (req, res, next) => {
     console.log('API route for active router');
     next();
 }, activeSubRoutes_1.default);
+app.use('/api/loginpage', loginRoute_1.default);
 async function startServer() {
     await (0, database_1.initDatabase)();
     console.log("init database saksesfuly");
