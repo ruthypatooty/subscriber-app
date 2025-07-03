@@ -20,25 +20,6 @@
             // Pre-launch task to ensure your TypeScript code is compiled before debugging
             "preLaunchTask": "tsc: build - src/tsconfig.backend.json"
         }
-    ],
-    "compounds": [],
-    "tasks": [
-        {
-            "label": "tsc: build - src/tsconfig.backend.json",
-            "type": "shell",
-            "command": "npx tsc --project src/tsconfig.backend.json",
-            "problemMatcher": "$tsc",
-            "isBackground": false,
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal": "silent"
-            },
-            "options": {
-                "cwd": "${workspaceFolder}"
-            }
-        }
     ]
 }
+
