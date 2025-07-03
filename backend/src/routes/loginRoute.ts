@@ -1,7 +1,7 @@
 import { Router } from "express";
 import User from "../models/Users";
 import bcrypt from "bcryptjs";
-import { roleEnum } from "@/shared/roleEnum";
+import { roleEnum } from "../shared/enum/roleEnum";
 
 const loginRouter = Router();
 
