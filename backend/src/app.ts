@@ -8,6 +8,8 @@ import level1router from "./routes/approverOneRoute.js";
 import level2router from "./routes/approverTwoRoute.js";
 import activeRouter from "./routes/activeSubRoutes.js";
 import loginRouter from "./routes/loginRoute.js";
+import { create } from "domain";
+import createUserRoute from "./routes/createUserRoute.js";
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -27,6 +29,7 @@ app.use('/api', (req,res,next)=>{
     next();
 },activeRouter);
 app.use('/api/loginpage', loginRouter);
+app.use('/api/createuser', createUserRoute);
 
 async function startServer(){
     await initDatabase();
