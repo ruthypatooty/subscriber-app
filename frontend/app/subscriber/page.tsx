@@ -13,10 +13,19 @@ const SubscriberPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (!user) {
-      router.push('/login'); // redirect if not logged in
-    }
+      const userStr = localStorage.getItem('user');
+        let user: { message?:{userName?: string} } | null = null;
+        if (userStr) {
+            try {
+                user = JSON.parse(userStr);
+            } catch (e) {
+                console.error('Failed to parse user from localStorage', e);
+            }
+        }
+        if (user?.message?.userName !== 'sub1') {
+            router.push('/');
+        }
+ 
   }, []);
   const handleSubscriberSubmit = async()=>{
     console.log('sending request....', subscriberName);

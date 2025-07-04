@@ -9,25 +9,35 @@ import { useRouter } from 'next/navigation';
 const LevelTwoPage = () => {
     const [subscriberList, setSubscriberList] = useState<SubscriberAttributes[]>([]);
     const router = useRouter();
+    const [checkingAuth, setCheckingAuth] = useState(true);
 
     useEffect(() => {
-        const user = localStorage.getItem('user');
-        if (!user) {
-            router.push('/login'); // Redirect if not logged in
-            return;
-        }
-
-        const approved1subs = async () => {
+       const userStr = localStorage.getItem('user');
+        let user: { message?:{userName?: string} } | null = null;
+        if (userStr) {
             try {
-                const res = await fetch('http://localhost:3001/api/secondlevelapprover/firstlevelapproved');
-                const data = await res.json();
-                setSubscriberList(data);
-
-            } catch (error) {
-                console.log("error in level 2 page", error);
+                user = JSON.parse(userStr);
+            } catch (e) {
+                console.error('Failed to parse user from localStorage', e);
             }
         }
-        approved1subs();
+        if (user?.message?.userName !== 'approver2') {
+            router.push('/');
+        }
+        else {
+            const approved1subs = async () => {
+                try {
+                    const res = await fetch('http://localhost:3001/api/secondlevelapprover/firstlevelapproved');
+                    const data = await res.json();
+                    setSubscriberList(data);
+
+                } catch (error) {
+                    console.log("error in level 2 page", error);
+                }
+            }
+            approved1subs();  
+        }
+        setCheckingAuth(false);
     }, []);
 
     const handleLevel2Approval = async (subscriberId: number, decision: SubscriberEnum.Level2Approved | SubscriberEnum.Rejected) => {

@@ -14,9 +14,17 @@ const LevelOnePage = () => {
     const [checkingAuth, setCheckingAuth] = useState(true);
 
     useEffect(() => {
-        const user = localStorage.getItem('user');
-        if (!user) {
-            router.push('/login');
+        const userStr = localStorage.getItem('user');
+        let user: { message?:{userName?: string} } | null = null;
+        if (userStr) {
+            try {
+                user = JSON.parse(userStr);
+            } catch (e) {
+                console.error('Failed to parse user from localStorage', e);
+            }
+        }
+        if (user?.message?.userName !== 'approver1') {
+            router.push('/');
         } else {
             const sentSubs = async () => {
                 try {

@@ -1,17 +1,17 @@
 import express from "express";
 import cors from "cors";
-import { json } from "body-parser";
-import subRoutes from "./routes/subRoutes";
-import { initDatabase, sqlInstance } from "./config/database";
+import bodyParser from 'body-parser';
+import subRoutes from "./routes/subRoutes.js";
+import { initDatabase, sqlInstance } from "./config/database.js";
 import { start } from "repl";
-import level1router from "./routes/approverOneRoute";
-import level2router from "./routes/approverTwoRoute";
-import activeRouter from "./routes/activeSubRoutes";
-import loginRouter from "./routes/loginRoute";
+import level1router from "./routes/approverOneRoute.js";
+import level2router from "./routes/approverTwoRoute.js";
+import activeRouter from "./routes/activeSubRoutes.js";
+import loginRouter from "./routes/loginRoute.js";
 
 const app = express();
 const port = process.env.PORT || 3001;
-
+const { json, urlencoded } = bodyParser;
 app.use(cors());
 app.use(json());
 

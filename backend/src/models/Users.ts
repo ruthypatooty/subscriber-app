@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
-import { sqlInstance } from "../config/database";
-import { SubscriberEnum } from "@/shared/enum/statusEnum";
+import { sqlInstance } from "../config/database.js";
+import { SubscriberEnum } from "../shared/enum/statusEnum.js";
 
 interface UserAttributes{
     userId:number;

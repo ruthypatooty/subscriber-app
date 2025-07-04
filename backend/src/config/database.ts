@@ -1,10 +1,12 @@
 import { Sequelize } from "sequelize";
+import path from 'path';
+import dotenv from 'dotenv';
 
-const path = require('path');
+// const path = require('path');
 
 const envPath = '/mnt/c/Users/cid/Documents/practice/subscriber-app/.env.local';
 
-require('dotenv').config({path: envPath});
+dotenv.config({path: envPath});
 
 const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_PORT = process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10):5432;

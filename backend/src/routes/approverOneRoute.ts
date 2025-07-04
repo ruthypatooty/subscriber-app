@@ -1,6 +1,6 @@
 import { Router } from "express";
-import Subscriber from "../models/Subscriber";
-import { SubscriberEnum } from "@/shared/enum/statusEnum";
+import Subscriber from "../models/Subscriber.js";
+import { SubscriberEnum } from "../shared/enum/statusEnum.js";
 
 
 const level1router = Router();
