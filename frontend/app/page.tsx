@@ -65,7 +65,7 @@ const LoginPage = () => {
         >
         </Notification>
       )}
-      <form>
+      <form style={{ maxWidth: 350, margin: '40px auto', width: '100%' }}>
         <Stack>
           <h1>Login Page</h1>
           <Input placeholder="username"

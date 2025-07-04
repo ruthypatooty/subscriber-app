@@ -55,21 +55,25 @@ const SubscriberPage = () => {
   }
   return (
     <>
-      <BackBtn />
-      <div className='flex justify-center items-center h-screen gap-4'>
-        <input type="text"
-          placeholder="Enter your name..."
-          className=" border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent"
-          value={subscriberName}
-          onChange={(e) => { setSubscriberName(e.target.value) }}
-        />
-        <button onClick={handleSubscriberSubmit} className="btn btn-secondary hover:bg-pink-500 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2">
-          Request
-        </button>
-        {message && <p className='text-red-800'>{message}</p>}
-
+    <div className="min-h-screen bg-gray-100 p-4 flex flex-col justify-between">
+        <BackBtn />
+      <div className="flex-1 flex flex-col items-center justify-center w-full">
+        <div className="flex justify-center items-center mb-4 mt-8">          <input type="text"
+            placeholder="Enter your name..."
+            className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent"
+            value={subscriberName}
+            onChange={(e) => { setSubscriberName(e.target.value) }}
+          />
+          <button onClick={handleSubscriberSubmit} className="btn btn-secondary hover:bg-pink-500 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2">
+            Request
+          </button>
+          {message && <p className='text-red-800'>{message}</p>}
+        </div>
       </div>
-      <div className='flex justify-baseline'><SubList /></div>
+      <div className="w-full max-w-2xs mt-8 overflow-y-auto">
+        <SubList />
+      </div>
+      </div>
     </>
   )
 }
