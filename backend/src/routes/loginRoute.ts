@@ -36,6 +36,7 @@ loginRouter.post("/login", async (req, res) => {
     console.log("im inside the loin post");
     if (!userName || !password) {
       res.status(400).json({ message: "username/password not valid duh" });
+      return;
     }
     const currentUser = await User.findOne({
       where: { userName: userName },
@@ -43,11 +44,13 @@ loginRouter.post("/login", async (req, res) => {
     console.log("currentUser", currentUser);
     if (!currentUser) {
       res.status(401).json({ message: "user not found" });
+      return;
     } else {
       const passValid = password === currentUser.password;
       if (!passValid) {
         res.status(401).json({ message: "Invalid credentials." });
         console.log("passvalid", passValid);
+        return;
       }
       console.log("Login successful for user:", userName);
       const userResponse = {
@@ -73,6 +76,7 @@ loginRouter.post("/login", async (req, res) => {
   } catch (error) {
     console.error("error in post user create", error);
     res.status(500).json({ message: " server error post", error: error });
+    return;
   }
 });
 export default loginRouter;
