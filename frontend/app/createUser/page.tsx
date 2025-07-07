@@ -15,8 +15,9 @@ const CreateUser = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const router = useRouter();
 
-    const createUserBtn = async () => {
-        if (!nameValue || !passwordValue || !roleValue) {
+    const createUserBtn = async (e:any) => {
+    e.preventDefault(); // Prevent auto-submit
+        if (!nameValue || !passwordValue || roleValue === undefined) {
             setCompleteField(false);
         }
         else {
@@ -91,8 +92,9 @@ const CreateUser = () => {
         onClick={createUserBtn}
         variant="gradient"
         gradient={{ from: "blue", to: "cyan", deg: 90 }}
+        type='button'
       >
-        create user
+        create usetar
       </Button>
       {completeField && (
         <Notification title={isSuccess ?"Success!" :"wonk wonk"}>

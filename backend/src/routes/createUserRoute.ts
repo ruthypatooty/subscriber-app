@@ -9,7 +9,7 @@ createUserRoute.post("/", async (req, res) => {
         const { nameValue, passwordValue, roleValue } = req.body;
         console.log("Received create user request with values:", { nameValue, passwordValue, roleValue });
 
-        if (!nameValue || !passwordValue || !roleValue) {
+        if (!nameValue || !passwordValue || roleValue == undefined) {
             res.status(400).json({ message: "All fields are required" });
             return;
         }
