@@ -15,7 +15,7 @@ const LevelOnePage = () => {
 
     useEffect(() => {
         const userStr = localStorage.getItem('user');
-        let user: { message?:{userName?: string} } | null = null;
+        let user: { message?:{role?: number} } | null = null;
         if (userStr) {
             try {
                 user = JSON.parse(userStr);
@@ -23,7 +23,7 @@ const LevelOnePage = () => {
                 console.error('Failed to parse user from localStorage', e);
             }
         }
-        if (user?.message?.userName !== 'approver1') {
+        if (user?.message?.role !== 1) {
             router.push('/');
         } else {
             const sentSubs = async () => {

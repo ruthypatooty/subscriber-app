@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react'
-import { Button, Input, PasswordInput, Stack, Notification } from '@mantine/core';
+import { Button, Input, PasswordInput, Stack, Notification, Anchor } from '@mantine/core';
 import { IconX, IconCheck } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 
@@ -62,15 +62,16 @@ const LoginPage = () => {
           color={isSuccess ? "teal" : "red"}
           title={isSuccess ? "Success!" : "Bummer!"}
           onClose={() => setShowNotification(false)}
-        >
-        </Notification>
+        ></Notification>
       )}
       <form>
         <Stack>
           <h1>Login Page</h1>
-          <Input placeholder="username"
+          <Input
+            placeholder="username"
             value={userName}
-            onChange={(e) => setUserName(e.currentTarget.value)} />
+            onChange={(e) => setUserName(e.currentTarget.value)}
+          />
           <PasswordInput
             value={password}
             onChange={(event) => setPassword(event.currentTarget.value)}
@@ -78,14 +79,24 @@ const LoginPage = () => {
           <Button
             onClick={handleLoginSubmit}
             variant="gradient"
-            gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
+            gradient={{ from: "blue", to: "cyan", deg: 90 }}
           >
             login button
           </Button>
+          <Anchor
+            variant="gradient"
+            gradient={{ from: "pink", to: "yellow" }}
+            fw={500}
+            fz="lg"
+            href="/createUser"
+          >
+            Create User
+          </Anchor>
+
         </Stack>
       </form>
     </>
-  )
+  );
 }
 
 export default LoginPage

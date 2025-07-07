@@ -14,7 +14,7 @@ const SubscriberPage = () => {
 
   useEffect(() => {
       const userStr = localStorage.getItem('user');
-        let user: { message?:{userName?: string} } | null = null;
+        let user: { message?:{role?: number} } | null = null;
         if (userStr) {
             try {
                 user = JSON.parse(userStr);
@@ -22,7 +22,7 @@ const SubscriberPage = () => {
                 console.error('Failed to parse user from localStorage', e);
             }
         }
-        if (user?.message?.userName !== 'sub1') {
+        if (user?.message?.role !== 0) {
             router.push('/');
         }
  

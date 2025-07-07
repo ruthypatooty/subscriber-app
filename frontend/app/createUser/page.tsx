@@ -1,6 +1,7 @@
 'use client';
 import { roleEnum } from '@/shared/enum/roleEnum';
 import { Button, Input, Menu, PasswordInput, Notification } from '@mantine/core'
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useState } from 'react';
 
@@ -11,6 +12,8 @@ const CreateUser = () => {
     const [roleValue, setRoleValue] = useState<number | undefined>(undefined);
     const [completeField, setCompleteField] = useState(false);
     const detailsRef = React.useRef<HTMLDetailsElement>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const router = useRouter();
 
     const createUserBtn = async () => {
         if (!nameValue || !passwordValue || !roleValue) {
@@ -33,9 +36,14 @@ const CreateUser = () => {
                     setNameValue('');
                     setPasswordValue('');
                     setRoleValue(undefined);
+                    setIsSuccess(true);
+                    setTimeout(()=>{
+                        router.push('/');
+                    }, 500);
                 }else{
                     console.error('Error creating user:', data);
                     setCompleteField(false);
+                    setIsSuccess(false);
                 }
             }catch(error){
                 console.error('Error creating user:', error);
@@ -48,8 +56,11 @@ const CreateUser = () => {
       <label className="block mb-1 text-sm font-medium text-gray-700">
         Name
       </label>
-      <Input onChange={(e) => setNameValue(e.currentTarget.value)}
-value={nameValue} placeholder="Enter user name here..." />
+      <Input
+        onChange={(e) => setNameValue(e.currentTarget.value)}
+        value={nameValue}
+        placeholder="Enter user name here..."
+      />
 
       <PasswordInput
         value={passwordValue}
@@ -68,7 +79,7 @@ value={nameValue} placeholder="Enter user name here..." />
                 value={roleEnum[role as keyof typeof roleEnum]}
                 onClick={() => {
                   setRoleValue(roleEnum[role as keyof typeof roleEnum]);
-                  detailsRef.current?.removeAttribute('open');
+                  detailsRef.current?.removeAttribute("open");
                 }}
               >
                 <a>{role}</a>
@@ -84,9 +95,8 @@ value={nameValue} placeholder="Enter user name here..." />
         create user
       </Button>
       {completeField && (
-            <Notification title="We notify you that">
-      You are now obligated to give a star to Mantine project on GitHub
-    </Notification>
+        <Notification title={isSuccess ?"Success!" :"wonk wonk"}>
+        </Notification>
       )}
     </>
   );

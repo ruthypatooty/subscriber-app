@@ -13,7 +13,7 @@ const LevelTwoPage = () => {
 
     useEffect(() => {
        const userStr = localStorage.getItem('user');
-        let user: { message?:{userName?: string} } | null = null;
+        let user: { message?:{role?: number} } | null = null;
         if (userStr) {
             try {
                 user = JSON.parse(userStr);
@@ -21,7 +21,7 @@ const LevelTwoPage = () => {
                 console.error('Failed to parse user from localStorage', e);
             }
         }
-        if (user?.message?.userName !== 'approver2') {
+        if (user?.message?.role !== 2) {
             router.push('/');
         }
         else {
