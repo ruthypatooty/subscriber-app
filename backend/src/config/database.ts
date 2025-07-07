@@ -2,12 +2,15 @@ import { Sequelize } from "sequelize";
 import path from 'path';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
+import { expand} from 'dotenv-expand';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const envPath = path.resolve(__dirname, '../../.env.local');
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// const envPath = path.resolve(__dirname, '../../.env.local');
 
-dotenv.config({path: envPath});
+const env = dotenv.config();
+// dotenv.config({path: envPath});
+expand(env)
 
 const DB_HOST = process.env.DB_HOST;
 const DB_PORT = process.env.DB_PORT;
