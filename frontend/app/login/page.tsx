@@ -1,9 +1,9 @@
 'use client';
 import React, { useState } from 'react'
-import { Button, Input, PasswordInput, Stack, Notification, Anchor } from '@mantine/core';
+import { Button, Input, PasswordInput, Stack, Notification } from '@mantine/core';
 import { IconX, IconCheck } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
-import CreateUSerAnchor from '../users/components/CreateUSerBtn';
+import CreateUSerAnchor from './users/components/CreateUSerBtn';
 
 const LoginPage = () => {
   const [password, setPassword] = useState('');
@@ -63,16 +63,15 @@ const LoginPage = () => {
           color={isSuccess ? "teal" : "red"}
           title={isSuccess ? "Success!" : "Bummer!"}
           onClose={() => setShowNotification(false)}
-        ></Notification>
+        >
+        </Notification>
       )}
-      <form>
-        {/* <Stack>
+      <form style={{ maxWidth: 350, margin: '40px auto', width: '100%' }}>
+        <Stack>
           <h1>Login Page</h1>
-          <Input
-            placeholder="username"
+          <Input placeholder="username"
             value={userName}
-            onChange={(e) => setUserName(e.currentTarget.value)}
-          />
+            onChange={(e) => setUserName(e.currentTarget.value)} />
           <PasswordInput
             value={password}
             onChange={(event) => setPassword(event.currentTarget.value)}
@@ -80,15 +79,15 @@ const LoginPage = () => {
           <Button
             onClick={handleLoginSubmit}
             variant="gradient"
-            gradient={{ from: "blue", to: "cyan", deg: 90 }}
+            gradient={{ from: 'blue', to: 'cyan', deg: 90 }}
           >
-            login buttons
+            login button
           </Button>
-          <CreateUSerAnchor />
-        </Stack> */}
+                  <CreateUSerAnchor />
+        </Stack>
       </form>
     </>
-  );
+  )
 }
 
 export default LoginPage

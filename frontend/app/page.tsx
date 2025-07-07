@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Button, Input, PasswordInput, Stack, Notification } from '@mantine/core';
 import { IconX, IconCheck } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
+import CreateUSerAnchor from './users/components/CreateUSerBtn';
 
 const LoginPage = () => {
   const [password, setPassword] = useState('');
@@ -82,6 +83,7 @@ const LoginPage = () => {
           >
             login button
           </Button>
+                  <CreateUSerAnchor />
         </Stack>
       </form>
     </>
