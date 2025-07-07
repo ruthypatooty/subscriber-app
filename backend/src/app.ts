@@ -35,9 +35,6 @@ async function startServer(){
     await initDatabase();
     console.log("init database saksesfuly");
 
-    await sqlInstance.sync({alter:true});
-    console.log("db synced sakesfuly")
-
     app.listen(port,()=>{
         console.log(`Server running on ${port}`);
     })
