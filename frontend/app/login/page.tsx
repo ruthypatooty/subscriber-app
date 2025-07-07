@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Button, Input, PasswordInput, Stack, Notification, Anchor } from '@mantine/core';
 import { IconX, IconCheck } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
+import CreateUSerAnchor from '../users/components/CreateUSerBtn';
 
 const LoginPage = () => {
   const [password, setPassword] = useState('');
@@ -65,7 +66,7 @@ const LoginPage = () => {
         ></Notification>
       )}
       <form>
-        <Stack>
+        {/* <Stack>
           <h1>Login Page</h1>
           <Input
             placeholder="username"
@@ -81,19 +82,10 @@ const LoginPage = () => {
             variant="gradient"
             gradient={{ from: "blue", to: "cyan", deg: 90 }}
           >
-            login button
+            login buttons
           </Button>
-          <Anchor
-            variant="gradient"
-            gradient={{ from: "pink", to: "yellow" }}
-            fw={500}
-            fz="lg"
-            href="/createUser"
-          >
-            Create User
-          </Anchor>
-
-        </Stack>
+          <CreateUSerAnchor />
+        </Stack> */}
       </form>
     </>
   );

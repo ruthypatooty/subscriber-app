@@ -37,8 +37,8 @@ export async function initDatabase(){
         await sequelize.authenticate();
         console.log("DB Connection sakses!",sequelize.getDatabaseName());
 
-        await sequelize.sync();
-        console.log("models synced..",sequelize.models);
+        // await sequelize.sync();
+        // console.log("models synced..",sequelize.models);
     }catch(error){
         console.error('unable to process', error);
     }

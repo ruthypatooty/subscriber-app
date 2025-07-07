@@ -1,7 +1,8 @@
 {
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
-    "@types/node": "^24.0.10"
+    "@types/node": "^24.0.10",
+    "sequelize-cli": "^6.6.3"
   },
   "dependencies": {
     "@types/react": "^19.1.8",
