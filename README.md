@@ -19,9 +19,19 @@ A full-stack subscriber management application built with Node.js, TypeScript, a
 - Sequelize ORM
 - PostgreSQL
 - CORS enabled
+- Copy `.env.example` in the `backend` directory to `.env` and fill in your actual database credentials.
 
 **Frontend:**
 - Modern JavaScript framework (runs on port 3000)
+- **Do NOT commit your real `.env` file to version control.**
+- Create a `.env` file in the `frontend` directory with the following (replace with your own secret for production):
+  ```env
+  NEXTAUTH_SECRET=your-secret-here
+  NEXTAUTH_URL=http://localhost:3000
+  ```
+- You may also provide a `.env.example` in the `frontend` directory for collaborators to copy.
+
+**Never commit real secrets or production credentials to your repository!**
 
 ## Prerequisites
 
