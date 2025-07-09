@@ -3,27 +3,9 @@ import User from "../models/Users.js";
 import bcrypt from "bcryptjs";
 import { roleEnum } from "../shared/enum/roleEnum.js";
 
-const loginRouter = Router();
+const loginRouterOld = Router();
 
-// loginRouter.post('/login', async (req, res) => {
-//     try {
-//         const { userName, password } = req.body;
-//         console.log('are we hitting post login');
-//         if (!userName || !password) {
-//             res.status(404).json({ message: 'username not valid duh' });
-//         }
-
-//         const newUser = await User.create({ userName, password });
-
-//         res.status(200).json({ message: 'User Created saksesfuli', user: newUser });
-
-//     } catch (error) {
-//         console.error('error in post user create', error);
-//         res.status(500).json({ message: ' server error post', error: error })
-//     }
-// })
-
-loginRouter.post("/login", async (req, res) => {
+loginRouterOld.post("/login", async (req, res) => {
   const { userName, password } = req.body;
   console.log(
     "Backend received userName:",
@@ -35,7 +17,7 @@ loginRouter.post("/login", async (req, res) => {
   try {
     console.log("im inside the loin post");
     if (!userName || !password) {
-      res.status(400).json({ message: "username/password not valid duh" });
+      res.status(400).json({ message: "username/password not valid duh",success: false });
       return;
     }
     const currentUser = await User.findOne({
@@ -43,12 +25,12 @@ loginRouter.post("/login", async (req, res) => {
     });
     console.log("currentUser", currentUser);
     if (!currentUser) {
-      res.status(401).json({ message: "user not found" });
+      res.status(401).json({ message: "user not found",success: false });
       return;
     } else {
       const passValid = password === currentUser.password;
       if (!passValid) {
-        res.status(401).json({ message: "Invalid credentials." });
+        res.status(401).json({ message: "Invalid credentials." ,success: false });
         console.log("passvalid", passValid);
         return;
       }
@@ -71,12 +53,11 @@ loginRouter.post("/login", async (req, res) => {
       } else if (userResponse.role === roleEnum.level2approver) {
         routePath = "/levelTwo";
       }
-      res.status(200).json({ message: userResponse, routePath });
+      res.status(200).json({ user: userResponse, routePath,success: true });
     }
   } catch (error) {
     console.error("error in post user create", error);
-    res.status(500).json({ message: " server error post", error: error });
+    res.status(500).json({ message: " server error post", error: error,success: false });
     return;
   }
 });
-export default loginRouter;

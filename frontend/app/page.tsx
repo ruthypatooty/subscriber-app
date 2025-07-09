@@ -4,6 +4,7 @@ import { Button, Input, PasswordInput, Stack, Notification } from '@mantine/core
 import { IconX, IconCheck } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import CreateUSerAnchor from './users/components/CreateUSerBtn';
+import { useSession, signIn, signOut } from "next-auth/react"
 
 const LoginPage = () => {
   const [password, setPassword] = useState('');
@@ -14,42 +15,43 @@ const LoginPage = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const router = useRouter();
+const {data:session, status, update} = useSession();
 
   const handleLoginSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     setShowNotification(false);
+    if(session){
+      console.log('session is already there, so signing out', session);
+    }
     try {
-      console.log("i inside the handle logsubmit")
-      const res = await fetch('http://localhost:3001/api/loginpage/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userName, password }),
-      });
-      console.log('see user password here:', userName, password);
-      const data = await res.json();
-      if (res.ok) {
-        console.log('res from user submit', res, data);
-        setUserName('');
-        setPassword('');
-        setIsSuccess(true);
-        setShowNotification(true);
-        setMessage(`User found,${data.message}`);
-        localStorage.setItem('user',JSON.stringify(data));
-        setTimeout(() => {
-          router.push(data.routePath);
-        }, 500);
-        
+        const authResponse = await signIn('credentials', {
+          userName,
+          password,
+          redirect: false, // Prevent automatic redirection
+        });
+        console.log(authResponse,'authResponse in login page');
+        if (authResponse?.ok) {
+          setUserName("");
+          setPassword("");
+          setIsSuccess(true);
+          setShowNotification(true);
+          setMessage(`User found`);
 
-      } else {
-        console.log('error in user submit');
-        setMessage(`User not found,${data.message}`);
-        setIsSuccess(false);
-        setShowNotification(true);
+          await update();
 
-      }
-      
+          const updatedSession = await fetch('/api/auth/session').then(res=>res.json());
+
+          setTimeout(() => {
+            router.push(updatedSession?.user?.routePath || '/');
+          }, 200);
+          
+        }else {
+          setIsSuccess(false);
+          setShowNotification(true);
+          setMessage(`Login failed`);
+          console.error('Login failed:', authResponse?.error);
+          throw new Error('NextAuth session creation failed');
+        }
     } catch (error) {
       console.error('error in post user submit', error);
     }

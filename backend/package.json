@@ -4,7 +4,6 @@
   "description": "",
   "license": "ISC",
   "author": "",
-  
   "main": "dist/app.js",
   "scripts": {
     "build:check": "tsc --project tsconfig.backend.json",
@@ -16,6 +15,8 @@
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
+    "dotenv": "^17.1.0",
+    "dotenv-expand": "^12.0.2",
     "express": "^4.19.2",
     "module-alias": "^2.2.3",
     "mysql2": "^3.14.1",
