@@ -45,6 +45,7 @@ loginRouter.post("/login", async (req, res) => {
         routePath = "/levelTwo";
       }
       const userResponse = {
+        id: currentUser?.userId.toString(), // NextAuth.js expects 'id' as string
         userId: currentUser?.userId, // This is a number from your model
         userName: currentUser?.userName,
         userStatus: currentUser?.userStatus,

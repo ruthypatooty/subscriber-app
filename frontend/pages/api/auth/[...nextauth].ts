@@ -1,3 +1,4 @@
-import { handler } from "../../../auth";
+import NextAuth from "next-auth";
+import { authOptions } from "../../../auth";
 
-export default handler;
+export default NextAuth(authOptions);

@@ -5,7 +5,7 @@ import Credentials from "next-auth/providers/credentials";
 
 console.log("NextAuth handlers loaded");
 console.log("NextAuth import:", NextAuth);
-export const authOptions: NextAuthOptions= {
+export const authOptions: NextAuthOptions = {
   ...authConfig,
   providers: [
     Credentials({
@@ -33,30 +33,27 @@ export const authOptions: NextAuthOptions= {
             },
             body: JSON.stringify({ userName, password }),
           });
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.message || "Failed to authorize");
-            }
-            console.log("Response from login API:", res);
-            // Assuming the response contains user data
-            const data = await res.json();
-            console.log("Data from login API:", data);
-            if (!data || !data.user) {
-                throw new Error("No user data returned from login API");
-                }
-            // Check if the user exists in the database
-            const user = data.user;
+          if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Failed to authorize");
+          }
+          console.log("Response from login API:", res);
+          // Assuming the response contains user data
+          const data = await res.json();
+          console.log("Data from login API:", data);
+          if (!data || !data.user) {
+            throw new Error("No user data returned from login API");
+          }
+          // Check if the user exists in the database
+          const user = data.user;
 
           return {
             id: user.userId.toString(), // NextAuth.js expects 'id' as string
             userId: user.userId, // Your custom numeric ID
             userName: user.userName,
             role: user.role,
-            routePath: user.routePath,
-            userStatus: user.userStatus || null,
-
+            routePath: user.routePath || "/",
           };
-
         } catch (error) {
           console.error("Error in authorize:", error);
           throw new Error("Authorization failed");
@@ -75,21 +72,24 @@ export const authOptions: NextAuthOptions= {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.userId = user.userId; // Keep original userId as number
+        token.userId = user.userId;
         token.userName = user.userName;
         token.userStatus = user.userStatus;
         token.role = user.role;
         token.routePath = user.routePath;
-
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.userId = token.userId as number; // Original userId as number
-        session.user.userStatus = token.userStatus as string;
-        session.user.role = token.role as number; // Role as number
-        session.user.routePath = token.routePath as string;
+        session.user = {
+          id: token.id,
+          userId: token.userId,
+          userName: token.userName,
+          userStatus: token.userStatus? token.userStatus : undefined,
+          role: token.role,
+          routePath: token.routePath,
+        };
       }
 
       return session;
@@ -106,8 +106,6 @@ export const authOptions: NextAuthOptions= {
   },
 };
 
-export const handler = NextAuth(authOptions);
-console.log("GET Handler is:", typeof handler.GET); // should be "function"
+export default NextAuth(authOptions);
+console.log(" Handler is:", NextAuth(authOptions)); 
 
-export const GET = handler.GET;
-export const POST = handler.POST;

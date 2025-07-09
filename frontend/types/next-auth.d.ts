@@ -5,6 +5,8 @@ declare module "next-auth" {
   interface Session {
     user: {
       userId: number;
+      userName: string;
+      id: string; // Match the ID from JWT
       subscriberName?: string;
       userStatus?: string;
       role: number;
@@ -15,10 +17,10 @@ declare module "next-auth" {
     id: string; // Match the ID from JWT
     userId: number; // Your custom numeric ID
     userName: string; // Your custom username
-    subscriberName?: string | null;
-    userStatus?: string | null;
+    subscriberName?: string;
+    userStatus?: string;
     role: number; // Role as a number
-    routePath?: string | null; // Route path based on role
+    routePath?: string; // Route path based on role
   }
 
 }
@@ -28,10 +30,10 @@ declare module "next-auth/jwt" {
     id: string; // Match the ID from User
     userId: number; // Your custom numeric ID
     userName: string; // Your custom username
-    subscriberName?: string | null;
-    userStatus?: string | null;
+    subscriberName?: string;
+    userStatus?: string;
     role: number;
-    routePath?: string | null;
+    routePath?: string;
 
   }
 }
