@@ -8,7 +8,7 @@ import {
   Notification,
 } from "@mantine/core";
 import { IconX, IconCheck } from "@tabler/icons-react";
-import { usePathname, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import CreateUSerAnchor from "./users/components/CreateUSerBtn";
 import { useSession, signIn, signOut } from "next-auth/react";
 import path from "path";
@@ -24,49 +24,85 @@ const LoginPage = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session, status, update } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const { user } = session || {};
-    if (status === "authenticated" && user?.routePath && pathname === "/") {
-      console.log("Redirecting to:", user.routePath);
-      router.replace(user.routePath);
-
+    if (session?.user?.routePath && status === "authenticated") {
+      router.push(session.user.routePath);
     }
-  }, [status, session?.user?.routePath, pathname, router]);
+  }, [session, status, router]);
 
-  
-  const handleLoginSubmit = async (e: { preventDefault: () => void }) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     setShowNotification(false);
 
-
     try {
-      const authResponse = await signIn("credentials", {
+      const result = await signIn("credentials", {
         userName,
         password,
-        redirect: false, // Prevent automatic redirection
+        redirect: false,
       });
-      if (authResponse?.ok) {
-        setUserName("");
-        setPassword("");
-        setIsSuccess(true);
-        setShowNotification(true);
-        setMessage(`User found`);
-        console.log(authResponse, "authResponse in login page");
 
-        await update();
+      if (result?.ok) {
+        setIsSuccess(true);
+        setMessage("Login successful!");
+        setShowNotification(true);
+        // The useEffect above will handle the redirect
       } else {
         setIsSuccess(false);
+        setMessage("Login failed");
         setShowNotification(true);
-        setMessage(`Login failed`);
-        console.error("Login failed:", authResponse?.error);
-
-        throw new Error("NextAuth session creation failed");
       }
     } catch (error) {
-      console.error("error in post user submit", error);
+      console.error("Login error:", error);
+      setIsSuccess(false);
+      setMessage("Login failed");
+      setShowNotification(true);
+    } finally {
+      setIsLoading(false);
     }
   };
+  // useEffect(() => {
+  //   const { user } = session || {};
+  //   if (status === "authenticated" && user?.routePath && pathname === "/") {
+  //     console.log("Redirecting to:", user.routePath);
+  //     router.replace(user.routePath);
+
+  //   }
+  // }, [status, session?.user?.routePath, pathname, router]);
+
+  // const handleLoginSubmit = async (e: { preventDefault: () => void }) => {
+  //   e.preventDefault();
+  //   setShowNotification(false);
+
+  //   try {
+  //     const authResponse = await signIn("credentials", {
+  //       userName,
+  //       password,
+  //       redirect: false, // Prevent automatic redirection
+  //     });
+  //     if (authResponse?.ok) {
+  //       setUserName("");
+  //       setPassword("");
+  //       setIsSuccess(true);
+  //       setShowNotification(true);
+  //       setMessage(`User found`);
+  //       console.log(authResponse, "authResponse in login page");
+
+  //       await update();
+  //     } else {
+  //       setIsSuccess(false);
+  //       setShowNotification(true);
+  //       setMessage(`Login failed`);
+  //       console.error("Login failed:", authResponse?.error);
+
+  //       throw new Error("NextAuth session creation failed");
+  //     }
+  //   } catch (error) {
+  //     console.error("error in post user submit", error);
+  //   }
+  // };
   if (status === "loading") {
     return <div>Loading...</div>;
   }
@@ -77,6 +113,7 @@ const LoginPage = () => {
   ) {
     return <div>Redirecting...</div>;
   }
+
   return (
     <>
       {showNotification && (
@@ -106,6 +143,7 @@ const LoginPage = () => {
           >
             login button
           </Button>
+          
           <CreateUSerAnchor />
         </Stack>
       </form>

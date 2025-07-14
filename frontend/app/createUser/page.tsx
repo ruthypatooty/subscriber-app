@@ -94,7 +94,7 @@ const CreateUser = () => {
         gradient={{ from: "blue", to: "cyan", deg: 90 }}
         type='button'
       >
-        create usetar
+        create use
       </Button>
       {completeField && (
         <Notification title={isSuccess ?"Success!" :"wonk wonk"}>
