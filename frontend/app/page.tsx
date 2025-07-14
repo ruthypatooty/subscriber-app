@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Button,
   Input,
@@ -8,9 +8,10 @@ import {
   Notification,
 } from "@mantine/core";
 import { IconX, IconCheck } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import CreateUSerAnchor from "./users/components/CreateUSerBtn";
 import { useSession, signIn, signOut } from "next-auth/react";
+import path from "path";
 
 const LoginPage = () => {
   const [password, setPassword] = useState("");
@@ -20,50 +21,62 @@ const LoginPage = () => {
   const checkIcon = <IconCheck size={20} />;
   const [isSuccess, setIsSuccess] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
   const { data: session, status, update } = useSession();
 
+  useEffect(() => {
+    const { user } = session || {};
+    if (status === "authenticated" && user?.routePath && pathname === "/") {
+      console.log("Redirecting to:", user.routePath);
+      router.replace(user.routePath);
+
+    }
+  }, [status, session?.user?.routePath, pathname, router]);
+
+  
   const handleLoginSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setShowNotification(false);
-    if (session?.user.userName === userName) {
-      console.log("session is already there, so signing out", session);
-    }
+
+
     try {
       const authResponse = await signIn("credentials", {
         userName,
         password,
         redirect: false, // Prevent automatic redirection
       });
-      console.log(authResponse, "authResponse in login page");
       if (authResponse?.ok) {
         setUserName("");
         setPassword("");
         setIsSuccess(true);
         setShowNotification(true);
         setMessage(`User found`);
+        console.log(authResponse, "authResponse in login page");
 
         await update();
-
-        const updatedSession = await fetch("/api/auth/session").then((res) =>
-          res.json()
-        );
-        console.log("updatedSession:", updatedSession);
-        console.log("routePath:", updatedSession?.user?.routePath);
-        setTimeout(() => {
-          router.push(updatedSession?.user?.routePath || "/");
-        }, 200);
       } else {
         setIsSuccess(false);
         setShowNotification(true);
         setMessage(`Login failed`);
         console.error("Login failed:", authResponse?.error);
+
         throw new Error("NextAuth session creation failed");
       }
     } catch (error) {
       console.error("error in post user submit", error);
     }
   };
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+  if (
+    status === "authenticated" &&
+    pathname === "/" &&
+    session?.user?.routePath
+  ) {
+    return <div>Redirecting...</div>;
+  }
   return (
     <>
       {showNotification && (
