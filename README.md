@@ -66,7 +66,7 @@ npm install
 2. Run database migrations:
 ```bash
 cd backend
-npm run db:migrate --config config/config.cjs
+npm run db:migrate
 ```
 
 To undo migrations if needed:
