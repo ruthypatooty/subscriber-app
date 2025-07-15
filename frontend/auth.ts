@@ -124,9 +124,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       async authorize(credentials) {
         try {
           if (!credentials) {
-            throw new Error("Credentials are required");
+            console.log("No credentials provided");
+
+            return null;
           }
           const { userName, password } = credentials;
+          console.log("Attempting login for:", userName);
 
           const res = await fetch("http://localhost:3001/api/login", {
             method: "POST",
@@ -135,22 +138,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
             body: JSON.stringify({ userName, password }),
           });
+          console.log("Response status:", res.status);
+          console.log("Response ok:", res.ok);
           if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.message || "Failed to authorize");
+            const errorText = await res.text();
+            console.log("Login failed - API response:", errorText);
+            return null;
           }
           console.log("Response from login API:", res);
           // Assuming the response contains user data
           const data = await res.json();
           console.log("Data from login API:", data);
           if (!data || !data.user) {
-            throw new Error("No user data returned from login API");
+            console.log("No user data returned");
+            return null;
           }
           // Check if the user exists in the database
           const user = data.user;
 
           return {
-            id: user.userId.toString(), 
+            id: user.userId.toString(),
             userId: user.userId,
             email: `${user.userName}@placeholder.com`,
             userName: user.userName,
@@ -159,7 +166,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           };
         } catch (error) {
           console.error("Error in authorize:", error);
-          throw new Error("Authorization failed");
+          return null;
         }
       },
     }),
@@ -178,12 +185,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.sub!
-        session.user.userId = token.userId as number
-        session.user.userName = token.userName as string
-        session.user.role = token.role
-        session.user.routePath = token.routePath as string
-        session.user.userStatus = token.userStatus
+        session.user.id = token.sub!;
+        session.user.userId = token.userId as number;
+        session.user.userName = token.userName as string;
+        session.user.role = token.role;
+        session.user.routePath = token.routePath as string;
+        session.user.userStatus = token.userStatus;
       }
       return session;
     },
@@ -196,6 +203,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/",
     error: "/",
   },
-
 });
 // console.log(" Handler is:", NextAuth(authOptions));

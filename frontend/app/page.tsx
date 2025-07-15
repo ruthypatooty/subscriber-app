@@ -44,14 +44,13 @@ const LoginPage = () => {
         redirect: false,
       });
 
-      if (result?.ok) {
+      if (result?.error) {
+        setIsSuccess(false);
+        setMessage("Invalid username or password");
+        setShowNotification(true);
+      } else {
         setIsSuccess(true);
         setMessage("Login successful!");
-        setShowNotification(true);
-        // The useEffect above will handle the redirect
-      } else {
-        setIsSuccess(false);
-        setMessage("Login failed");
         setShowNotification(true);
       }
     } catch (error) {
@@ -143,7 +142,7 @@ const LoginPage = () => {
           >
             login button
           </Button>
-          
+
           <CreateUSerAnchor />
         </Stack>
       </form>
