@@ -4,12 +4,13 @@ import Link from "next/link";
 import React from "react";
 
 const CreateUSerAnchor = () => {
-
   return (
     <>
-      <Anchor href="/createUser" underline="hover">
-        Sign Up for new Users{" "}
-      </Anchor>
+      <div className="card-actions" style={{marginTop:"10px"}}>
+        <Button component={Link} href="/createUser" variant="outline">
+          Sign Up for new Users
+        </Button>
+      </div>
     </>
   );
 };

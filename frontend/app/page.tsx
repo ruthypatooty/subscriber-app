@@ -123,29 +123,36 @@ const LoginPage = () => {
           onClose={() => setShowNotification(false)}
         ></Notification>
       )}
-      <form style={{ maxWidth: 350, margin: "40px auto", width: "100%" }}>
-        <Stack>
-          <h1>Login Page</h1>
-          <Input
-            placeholder="username"
-            value={userName}
-            onChange={(e) => setUserName(e.currentTarget.value)}
-          />
-          <PasswordInput
-            value={password}
-            onChange={(event) => setPassword(event.currentTarget.value)}
-          />
-          <Button
-            onClick={handleLoginSubmit}
-            variant="gradient"
-            gradient={{ from: "blue", to: "cyan", deg: 90 }}
-          >
-            login button
-          </Button>
-
-          <CreateUSerAnchor />
-        </Stack>
-      </form>
+      <div className="flex justify-center items-center h-screen">
+        <div className="card bg-base-100 w-96 shadow-sm">
+          <form style={{ maxWidth: 350, margin: "40px auto", width: "100%" }}>
+            <Stack gap="md" className="card-body items-center text-center">
+              <h2 className="card-title">Login Page</h2>
+              <Input
+                placeholder="username"
+                value={userName}
+                onChange={(e) => setUserName(e.currentTarget.value)}
+              />
+              <PasswordInput
+                value={password}
+                onChange={(event) => setPassword(event.currentTarget.value)}
+              />
+              <div className="card-actions">
+                <Button
+                  onClick={handleLoginSubmit}
+                  variant="gradient"
+                  gradient={{ from: "blue", to: "cyan", deg: 90 }}
+                >
+                  login button
+                </Button>
+                <h2 className="card-title">
+                  <CreateUSerAnchor />
+                </h2>
+              </div>
+            </Stack>
+          </form>
+        </div>
+      </div>
     </>
   );
 };

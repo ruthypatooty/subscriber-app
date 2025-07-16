@@ -1,9 +1,12 @@
 import { SubscriberAttributes } from '@/shared/subscriberType'
+import { Alert, Text } from '@mantine/core';
+import { IconCheck } from '@tabler/icons-react';
 import { error } from 'console';
 import React, { useEffect, useState } from 'react'
 
 const SubList = () => {
     const [activeLatest, setActiveLatest] = useState<SubscriberAttributes>();
+    const [isVisible, setIsVisible] = useState(false);
 
     const showLatest = async()=>{
         try{
@@ -15,6 +18,7 @@ const SubList = () => {
 
             const activeSubList : SubscriberAttributes= await res.json();
             setActiveLatest(activeSubList);
+            setIsVisible(true);
 
         }catch(error){
             console.error('error in subscriber list');
@@ -23,29 +27,31 @@ const SubList = () => {
     useEffect(()=>{
         showLatest();
     },[]);
+        if (!activeLatest) {
+        return (
+            <Text size="sm" color="dimmed" className="text-center">
+                No recent subscribers
+            </Text>
+        );
+    }
   return (
       <>
-          <div>
-              {/* <h1>Current active subscribers</h1>
-              <ul>
-                  {activeList.length === 0 && "No active subscribers"}
-                  {activeList.map((sub: any) => (
-                      <li key={sub.id}>
-                          {sub.subscriberName}
-                      </li>
-                  ))}
-
-              </ul> */}
-              {activeLatest ? (
-                  <div role="alert" className="alert alert-info">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="h-6 w-6 shrink-0 stroke-current">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                      </svg>
-                      <span>New subscriber:{activeLatest.subscriberName}</span>
-                  </div>
-              ) : <p>No new subscribers</p>}
-
-          </div>
+        <div className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+            <Alert
+                icon={<IconCheck size="1rem" />}
+                title="Latest Subscriber"
+                color="green"
+                radius="lg"
+                variant="light"
+                className="bg-green-50 border-green-200"
+                withCloseButton
+                onClose={() => setIsVisible(false)}
+            >
+                <Text size="sm" className="text-green-800">
+                    Last approved: <strong>{activeLatest.subscriberName}</strong>
+                </Text>
+            </Alert>
+        </div>
       </>
   )
 }
